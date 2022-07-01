@@ -1,25 +1,45 @@
 A CLI app that takes in a word as an argument, and returns a JSON string of a `lexico.com` definition of that word.
 
-The JSON is in the form of a `BigDefinition[]`, where 
+The JSON output is in the form of a `(BigDefinition | BigEtymology)[]`, where 
 
 ```typescript
-
-// whether this definition applies to a verb, noun, or adjective
 interface BigDefinition {
     transitivity?: string,
-    subMajorDefinitions: Definition[]
+    subMajorDefinitions: Definition[],
 }
 
-// the major definition of that specific context of the word
+// some big definitions
 interface Definition {
-    grammaticalNote? : string,
+    transitivity? : string,
     definition: string,
     subDefinitions: SubDefinition[]
 }
 
-// possible submeanings
 interface SubDefinition {
-    grammaticalNote?: string
+    transitivity?: string
+    definition: string,
+}
+
+interface BigEtymology {
+    title: string,
+    // too hard to deal with these for now
+    // senseRegister?: string,
+    // This isn't english grammar but it's easier to code with so
+    subMajorEtymologys: Etymology[],
+}
+
+// some big definitions
+interface Etymology {
+    phrase: string,
+    definition: string,
+    transitivity?: string,
+    // too hard to deal with these for now
+    // grammaticalNote?: string,
+    subEtymologys: SubEtymology[]
+}
+
+interface SubEtymology {
+    transitivity?: string
     definition: string,
 }
 ```
